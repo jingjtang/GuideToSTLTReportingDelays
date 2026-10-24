@@ -148,15 +148,38 @@ Plot.plot({
 })
 ```
 
-This guide is designed with and for state, tribal, local, and territorial (STLT) public health practitioners and modellers in the United States working with delayed surveillance data.
-It may also help staff in healthcare facilities, laboratories, and other reporting organisations understand how reporting processes affect downstream surveillance analyses.
+Recent reported values can therefore give a misleading picture of what is
+happening now, especially when reporting is severely incomplete.
+Our goal is to help public health teams estimate the values that recent data
+are likely to reach once more reports arrive and understand how uncertain
+those estimates are.
+This can help teams avoid mistaking reporting delays for real changes in
+disease activity and support better situational awareness.
 
-Simple approaches such as discarding recent data, using frozen values, or aggregating by report date are often the first and most accessible options.
-When delays are long or variable, or when uncertainty quantification is needed, statistical methods can improve estimates by learning from historical reporting patterns.
-This guide helps determine when simple approaches are sufficient and when statistical methods would be worthwhile.
+Several approaches can help public health teams work towards this goal.
+This guide introduces the available options and focuses on practical guidance
+for choosing and implementing methods in STLT settings, with emphasis on
+adoption, communication, and real-world case studies.
+It is intended as a companion to a technical overview of nowcasting methods
+that covers mathematical formulation and computational properties in detail.
 
-This guide is intended as a companion to a technical overview of nowcasting methods that covers mathematical formulation and computational properties in detail.
-Here we focus on practical guidance for choosing and implementing these methods in STLT settings, with emphasis on adoption, communication, and real-world case studies.
+## Who is this for?
+
+This guide is designed with and for state, tribal, local, and territorial
+(STLT) public health practitioners and modellers in the United States working
+with delayed surveillance data.
+It may also help staff in healthcare facilities, laboratories, and other
+reporting organisations understand how reporting processes affect downstream
+surveillance analyses.
+
+Its two primary audiences are:
+
+**Epidemiologists and public health practitioners**
+interested in accounting for reporting delays and other
+real-time data issues.
+
+**Modellers** expanding their understanding of reporting
+delays and the methods available to address them.
 
 ## What this guide covers
 
@@ -172,17 +195,6 @@ Here we focus on practical guidance for choosing and implementing these methods 
   assessing data through to communicating results.
 - **Case studies** demonstrating practical implementations
   in surveillance settings.
-
-## Who is this for?
-
-This guide is written for two audiences.
-
-**Epidemiologists and public health practitioners**
-interested in accounting for reporting delays and other
-real-time data issues.
-
-**Modellers** expanding their understanding of reporting
-delays and the methods available to address them.
 
 ## Get involved
 
