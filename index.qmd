@@ -11,7 +11,145 @@ These **reporting delays** mean that the most recent data
 systematically undercount the true number of events,
 complicating real-time analysis.
 
+```{ojs}
+//| echo: false
+
+weeks = Array.from({length: 74}, (_, i) => i + 1)
+
+gaussian = (x, centre, spread, height) =>
+  height * Math.exp(-0.5 * ((x - centre) / spread) ** 2)
+
+finalData = weeks.map((week, i) => ({
+  week,
+  series: "Finalized values",
+  value: Math.round(
+    34 +
+    gaussian(i, 19, 5.5, 82) +
+    gaussian(i, 43, 4.2, 205) +
+    4 * Math.sin(i * 0.75) +
+    2 * Math.cos(i * 0.27)
+  )
+}))
+
+viewof asOf = {
+  const form = html`<form style="max-width: 760px;">
+    <label style="display: block; font-weight: 600;">
+      Data reported as of:
+      <output></output>
+    </label>
+    <input
+      type="range"
+      min="0"
+      max="${weeks.length - 1}"
+      step="1"
+      value="54"
+      aria-label="Data reported as of"
+      style="width: 100%;"
+    >
+  </form>`
+  const input = form.querySelector("input")
+  const output = form.querySelector("output")
+  const update = () => {
+    form.value = Number(input.value)
+    output.value = `Week ${form.value + 1}`
+    form.dispatchEvent(new Event("input", {bubbles: true}))
+  }
+  input.addEventListener("input", update)
+  update()
+  return form
+}
+```
+
+```{ojs}
+//| echo: false
+
+reportedData = finalData
+  .slice(0, asOf + 1)
+  .map((d, i) => {
+    const delay = asOf - i
+    const fraction = Math.min(
+      1,
+      1 - Math.exp(-0.72 * (delay + 1))
+    )
+    return {
+      week: d.week,
+      series: "Values reported by selected date",
+      value: Math.round(d.value * fraction)
+    }
+  })
+```
+
+```{ojs}
+//| echo: false
+//| label: fig-reporting-delay-example
+//| fig-cap: >-
+//|   Illustrative synthetic data.
+//|   These values do not represent a real surveillance system or time period.
+//|   They are used only to demonstrate how reporting delays can make recent
+//|   counts appear lower than their finalized values.
+//|   Move the weekly control to see what would have been reported by each week.
+
+Plot.plot({
+  width,
+  height: 430,
+  marginLeft: 72,
+  marginBottom: 60,
+  style: {
+    fontSize: "13px"
+  },
+  x: {
+    label: "Reference week",
+    labelAnchor: "center",
+    labelArrow: "none",
+    ticks: 7,
+    tickFormat: d => `Week ${d}`
+  },
+  y: {
+    label: "Reported value",
+    labelAnchor: "center",
+    labelArrow: "none",
+    grid: true,
+    domain: [0, 280]
+  },
+  color: {
+    domain: [
+      "Finalized values",
+      "Values reported by selected date"
+    ],
+    range: ["#173f5f", "#d95f59"],
+    legend: true
+  },
+  marks: [
+    Plot.lineY(finalData, {
+      x: "week",
+      y: "value",
+      stroke: "series",
+      strokeWidth: 2.5
+    }),
+    Plot.lineY(reportedData, {
+      x: "week",
+      y: "value",
+      stroke: "series",
+      strokeWidth: 2.5
+    }),
+    Plot.dot(reportedData, {
+      x: "week",
+      y: "value",
+      fill: "series",
+      r: 2.5,
+      tip: true
+    }),
+    Plot.ruleX([weeks[asOf]], {
+      stroke: "#555",
+      strokeDasharray: "5,4",
+      strokeWidth: 1.5
+    })
+  ]
+})
+```
+
 This guide is designed with and for state, tribal, local, and territorial (STLT) public health practitioners and modellers in the United States working with delayed surveillance data.
+It may also help staff in healthcare facilities, laboratories, and other reporting organisations understand how reporting processes affect downstream surveillance analyses.
 
 Simple approaches such as discarding recent data, using frozen values, or aggregating by report date are often the first and most accessible options.
 When delays are long or variable, or when uncertainty quantification is needed, statistical methods can improve estimates by learning from historical reporting patterns.
