@@ -33,11 +33,12 @@ finalData = weeks.map((week, i) => ({
 
 viewof asOf = {
   const form = html`<form style="max-width: 760px;">
-    <label style="display: block; font-weight: 600;">
-      Data reported as of:
-      <output></output>
-    </label>
+    <div style="display: flex; align-items: baseline; gap: 0.35rem; font-weight: 600;">
+      <label for="reporting-week">Data reported as of:</label>
+      <output style="white-space: nowrap;"></output>
+    </div>
     <input
+      id="reporting-week"
       type="range"
       min="0"
       max="${weeks.length - 1}"
@@ -165,21 +166,14 @@ that covers mathematical formulation and computational properties in detail.
 
 ## Who is this for?
 
-This guide is designed with and for state, tribal, local, and territorial
-(STLT) public health practitioners and modellers in the United States working
-with delayed surveillance data.
-It may also help staff in healthcare facilities, laboratories, and other
-reporting organisations understand how reporting processes affect downstream
-surveillance analyses.
-
-Its two primary audiences are:
-
-**Epidemiologists and public health practitioners**
-interested in accounting for reporting delays and other
-real-time data issues.
-
-**Modellers** expanding their understanding of reporting
-delays and the methods available to address them.
+- **Epidemiologists and other state, tribal, local, and territorial (STLT)
+  public health practitioners in the United States** working with delayed
+  surveillance data and other real-time data issues.
+- **Modellers and analysts** expanding their understanding of reporting delays
+  and the methods available to address them.
+- **Staff in healthcare facilities, laboratories, and other reporting
+  organisations** seeking to understand how reporting processes affect
+  downstream surveillance analyses.
 
 ## What this guide covers
 
